@@ -1,0 +1,10 @@
+{
+    "python.defaultInterpreterPath": "backend/venv/bin/python",
+    "files.autoSave": "onFocusChange",
+    "files.exclude": {
+        "**/venv": true,
+        "**/__pycache__": true,
+        "**/.git": true,
+        "**/node_modules": true
+    }
+}

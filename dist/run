@@ -1,0 +1,11 @@
+cd backend
+# export API_V1_DOCS=true
+# export API_V1_REDOC=true
+# uvicorn app.api:app --host 0.0.0.0 --port 9000 --reload
+
+# Launch GNOME Terminal and attach to the session
+gnome-terminal --maximize -- bash -c "source venv/bin/activate; export API_V1_DOCS=true;export API_V1_REDOC=true; uvicorn app.api:app --host 0.0.0.0 --port 9000 --reload; exec bash"
+
+
+
+

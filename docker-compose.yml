@@ -1,0 +1,52 @@
+services:
+  db:
+    restart: always
+    container_name: finance-control-postgres
+    shm_size: 2g  # Aumenta o tamanho da memória compartilhada para 512 MB
+    build: postgres
+    ports:
+      - "4432:5432"
+    environment:
+      POSTGRES_DB: investment_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_MULTIPLE_DATABASES: 'investment_tracker'   # used by script init-db.sh
+      POSTGRES_CONFIG_FILE: '/etc/postgresql/postgresql.conf'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  backend:
+    image: investment-backend:latest
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    ports:
+      - "9634:9000"
+    environment:
+      # DATABASE_URL: "postgresql+asyncpg://postgres:postgres@db:5432/investment_tracker"
+      API_V1_DOCS: "${API_V1_DOCS:-false}"
+      API_V1_REDOC: "${API_V1_REDOC:-false}"
+    depends_on:
+      - db
+
+  frontend:
+    image: investment-frontend:latest
+    build:
+      context: frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "8634:5173"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

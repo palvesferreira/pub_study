@@ -1,0 +1,30 @@
+investment-tracker/
+├── backend/
+│   ├── main.py
+│   ├── database.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── crud.py
+│   ├── routers/
+│   │   ├── users.py
+│   │   └── auth.py
+│   ├── core/
+│   │   └── security.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── routes/
+│   │   │   ├── +error.svelte
+│   │   │   ├── +layout.svelte
+│   │   │   ├── +page.svelte
+│   │   │   └── dashboard/
+│   │   │       └── +page.svelte
+│   │   ├── lib/
+│   │   │   └── parser.js
+│   │   ├── app.html
+│   │   └── $lib/
+│   ├── static/
+├   ├── package.json
+    ├── svelte.config.js
+    └── vite.config.js

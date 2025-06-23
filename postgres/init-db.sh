@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+set -u
+
+function create_user_and_database() {
+        local database=$1
+        local dbuser=${database}user
+        local CREATE_PROCEDURE=$(cat ${database}-procedures.txt)
+        echo "  Creating user and database '$database'"
+        psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+            CREATE ROLE $dbuser WITH LOGIN ENCRYPTED PASSWORD '$POSTGRES_PASSWORD';
+            CREATE DATABASE $database OWNER $dbuser;
+            GRANT ALL PRIVILEGES ON DATABASE $database TO $dbuser;
+            \c $database
+            CREATE EXTENSION IF NOT EXISTS pgcrypto;
+            $CREATE_PROCEDURE
+EOSQL
+}
+
+
+if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
+        echo "Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES"
+        for db in $(echo $POSTGRES_MULTIPLE_DATABASES | tr ',' ' '); do
+                create_user_and_database $db
+        done
+        echo "Multiple databases created"
+fi

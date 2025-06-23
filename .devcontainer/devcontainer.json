@@ -1,0 +1,19 @@
+{
+  "name": "Finance Control Dev Container",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "backend",
+  "workspaceFolder": "/workspace",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode",
+    "svelte.svelte-vscode",
+    "dbaeumer.vscode-eslint"
+  ],
+  "postCreateCommand": "pip install -r backend/requirements.txt", //  && cd frontend && bash setup_frontend.sh
+  "forwardPorts": [8783, 5173],
+  "remoteUser": "vscode"
+}
