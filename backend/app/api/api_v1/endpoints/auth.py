@@ -6,7 +6,7 @@ from app.core.config import settings
 from app.core.security import create_access_token
 from app.schemas.users import UserCreate
 from app.schemas.tokens import Token
-from app.crud.crud_user import create_user, authenticate_user, get_user
+from app.crud.crud_users import create_user, authenticate_user, get_user
 from datetime import timedelta
 
 router = APIRouter()

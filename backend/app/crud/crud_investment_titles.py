@@ -1,8 +1,11 @@
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.models import InvestmentTitle
-from app.schemas import TitleCreate
 
-async def create_title(db: AsyncSession, title: TitleCreate):
+from app.models import InvestmentTitle
+from app.schemas import InvestmentTitleCreate
+
+
+async def create_title(db: AsyncSession, title: InvestmentTitleCreate):
     db_title = InvestmentTitle(**title.dict())
     db.add(db_title)
     await db.commit()

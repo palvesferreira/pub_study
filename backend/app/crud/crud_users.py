@@ -10,7 +10,6 @@ async def get_user(db: AsyncSession, username: str):
     return result.scalars().first()
 
 
-
 async def create_user(db: AsyncSession, user: UserCreate):
     hashed_pw = get_password_hash(user.password)
     db_user = User(username=user.username, hashed_password=hashed_pw)
